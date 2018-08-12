@@ -2745,7 +2745,7 @@
                         }));
                         var argument = msg.substring(cmd.length + 1);
 
-                        $.get('https://rawgit.com/basicBot/source/master/lang/langIndex.json', function(json) {
+                        $.get('https://rawgit.com/Smygou/AstronautaBOT/master/lang/langIndex.json', function(json) {
                             var langIndex = json;
                             var link = langIndex[argument.toLowerCase()];
                             if (typeof link === 'undefined') {
