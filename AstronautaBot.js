@@ -289,7 +289,7 @@
             autodisable: false,
             commandCooldown: 30,
             usercommandsEnabled: true,
-            thorCommand: false,
+            thorCommand: true,
             thorCooldown: 10,
             skipPosition: 3,
             skipReasons: [
