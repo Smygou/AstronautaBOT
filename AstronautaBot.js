@@ -112,7 +112,7 @@
 
     var loadChat = function(cb) {
         if (!cb) cb = function() {};
-        $.get('https://rawgit.com/basicBot/source/master/lang/langIndex.json', function(json) {
+        $.get('https://rawgit.com/Smygou/AstronautaBOT/tree/master/lang', function(json) {
             var link = basicBot.chatLink;
             if (json !== null && typeof json !== 'undefined') {
                 langIndex = json;
@@ -250,18 +250,18 @@
         status: false,
         name: 'basicBot',
         loggedInID: null,
-        scriptLink: 'https://rawgit.com/basicBot/source/master/basicBot.js',
+        scriptLink: 'https://rawgit.com/Smygou/AstronautaBOT/master/AstronautaBot.js',
         cmdLink: 'http://git.io/245Ppg',
-        chatLink: 'https://rawgit.com/basicBot/source/master/lang/en.json',
+        chatLink: 'https://rawgit.com/Smygou/AstronautaBOT/master/lang/pt-BR.json',
         chat: null,
         loadChat: loadChat,
         retrieveSettings: retrieveSettings,
         retrieveFromStorage: retrieveFromStorage,
         settings: {
-            botName: 'basicBot',
-            language: 'english',
-            chatLink: 'https://rawgit.com/basicBot/source/master/lang/en.json',
-            scriptLink: 'https://rawgit.com/basicBot/source/master/basicBot.js',
+            botName: 'AstronautaBOT',
+            language: 'portuguese',
+            chatLink: 'https://rawgit.com/Smygou/AstronautaBOT/master/lang/pt-BR.json',
+            scriptLink: 'https://rawgit.com/Smygou/AstronautaBOT/master/AstronautaBot.js',
             roomLock: false, // Requires an extension to re-load the script
             startupCap: 1, // 1-200
             startupVolume: 0, // 0-100
@@ -289,8 +289,8 @@
             autodisable: false,
             commandCooldown: 30,
             usercommandsEnabled: true,
-            thorCommand: true,
-            thorCooldown: 10,
+            fogueteCommand: true,
+            fogueteCooldown: 10,
             skipPosition: 3,
             skipReasons: [
                 ['theme', 'This song does not fit the room theme. '],
@@ -402,7 +402,7 @@
                     }, 1 * 1000, winner, pos);
                 }
             },
-            usersUsedThor: []
+            usersUsedfoguete: []
         },
         User: function(id, name) {
             this.id = id;
@@ -3656,24 +3656,24 @@
                 }
             },
 
-            thorCommand: {
-                command: 'thor',
+            fogueteCommand: {
+                command: 'foguete',
                 rank: 'user',
                 type: 'exact',
                 functionality: function(chat, cmd) {
                     if (this.type === 'exact' && chat.message.length !== cmd.length) return void(0);
                     if (!basicBot.commands.executable(this.rank, chat)) return void(0);
                     else {
-                        if (basicBot.settings.thorCommand) {
+                        if (basicBot.settings.fogueteCommand) {
                             var id = chat.uid,
                                 isDj = API.getDJ().id == id ? true : false,
                                 from = chat.un,
                                 djlist = API.getWaitList(),
                                 inDjList = false,
                                 oldTime = 0,
-                                usedThor = false,
-                                indexArrUsedThor,
-                                thorCd = false,
+                                usedFoguete = false,
+                                indexArrUsedFoguete,
+                                fogueteCd = false,
                                 timeInMinutes = 0,
                                 worthyAlg = Math.floor(Math.random() * 10) + 1,
                                 worthy = worthyAlg == 10 ? true : false;
@@ -3690,36 +3690,36 @@
                             }
 
                             if (inDjList) {
-                                for (var i = 0; i < basicBot.room.usersUsedThor.length; i++) {
-                                    if (basicBot.room.usersUsedThor[i].id == id) {
-                                        oldTime = basicBot.room.usersUsedThor[i].time;
-                                        usedThor = true;
-                                        indexArrUsedThor = i;
+                                for (var i = 0; i < basicBot.room.usersUsedFoguete.length; i++) {
+                                    if (basicBot.room.usersUsedFoguete[i].id == id) {
+                                        oldTime = basicBot.room.usersUsedFoguete[i].time;
+                                        usedfoguete = true;
+                                        indexArrUsedfoguete = i;
                                     }
                                 }
 
-                                if (usedThor) {
-                                    timeInMinutes = (basicBot.settings.thorCooldown + 1) - (Math.floor((oldTime - Date.now()) * Math.pow(10, -5)) * -1);
-                                    thorCd = timeInMinutes > 0 ? true : false;
-                                    if (thorCd == false)
-                                        basicBot.room.usersUsedThor.splice(indexArrUsedThor, 1);
+                                if (usedfoguete) {
+                                    timeInMinutes = (basicBot.settings.fogueteCooldown + 1) - (Math.floor((oldTime - Date.now()) * Math.pow(10, -5)) * -1);
+                                    fogueteCd = timeInMinutes > 0 ? true : false;
+                                    if (fogueteCd == false)
+                                        basicBot.room.usersUsedfoguete.splice(indexArrUsedfoguete, 1);
                                 }
 
-                                if (thorCd == false || usedThor == false) {
+                                if (fogueteCd == false || usedfoguete == false) {
                                     var user = {
                                         id: id,
                                         time: Date.now()
                                     };
-                                    basicBot.room.usersUsedThor.push(user);
+                                    basicBot.room.usersUsedfoguete.push(user);
                                 }
                             }
 
                             if (!inDjList) {
-                                return API.sendChat(subChat(basicBot.chat.thorNotClose, {
+                                return API.sendChat(subChat(basicBot.chat.fogueteNotClose, {
                                     name: from
                                 }));
-                            } else if (thorCd) {
-                                return API.sendChat(subChat(basicBot.chat.thorcd, {
+                            } else if (fogueteCd) {
+                                return API.sendChat(subChat(basicBot.chat.foguetecd, {
                                     name: from,
                                     time: timeInMinutes
                                 }));
@@ -3728,13 +3728,13 @@
                             if (worthy) {
                                 if (API.getWaitListPosition(id) != 0)
                                     basicBot.userUtilities.moveUser(id, 1, false);
-                                API.sendChat(subChat(basicBot.chat.thorWorthy, {
+                                API.sendChat(subChat(basicBot.chat.fogueteWorthy, {
                                     name: from
                                 }));
                             } else {
                                 if (API.getWaitListPosition(id) != djlist.length - 1)
                                     basicBot.userUtilities.moveUser(id, djlist.length, false);
-                                API.sendChat(subChat(basicBot.chat.thorNotWorthy, {
+                                API.sendChat(subChat(basicBot.chat.fogueteNotWorthy, {
                                     name: from
                                 }));
                             }
