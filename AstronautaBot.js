@@ -179,7 +179,7 @@
         var json_sett = null;
         var roominfo = document.getElementById('room-settings');
         info = roominfo.textContent;
-        var ref_bot = '@basicBot=';
+        var ref_bot = '@AstronautaBOT=';
         var ind_ref = info.indexOf(ref_bot);
         if (ind_ref > 0) {
             var link = info.substring(ind_ref + ref_bot.length, info.length);
@@ -248,7 +248,7 @@
     var basicBot = {
         version: '2.12.0',
         status: false,
-        name: 'basicBot',
+        name: 'AstronautaBOT',
         loggedInID: null,
         scriptLink: 'https://rawgit.com/Smygou/AstronautaBOT/master/AstronautaBot.js',
         cmdLink: 'http://git.io/245Ppg',
